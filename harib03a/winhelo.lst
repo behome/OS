@@ -1,0 +1,80 @@
+     1 00000000                                 [FORMAT "WCOFF"]
+     2 00000000                                 [INSTRSET "i486p"]
+     3 00000000                                 [OPTIMIZE 1]
+     4 00000000                                 [OPTION 1]
+     5 00000000                                 [BITS 32]
+     6 00000000                                 	EXTERN	_api_initmalloc
+     7 00000000                                 	EXTERN	_api_malloc
+     8 00000000                                 	EXTERN	_api_openwin
+     9 00000000                                 	EXTERN	_api_boxfilwin
+    10 00000000                                 	EXTERN	_sprintf
+    11 00000000                                 	EXTERN	_api_putstrwin
+    12 00000000                                 	EXTERN	_api_getkey
+    13 00000000                                 	EXTERN	_api_free
+    14 00000000                                 	EXTERN	_api_closewin
+    15 00000000                                 	EXTERN	_api_end
+    16 00000000                                 [FILE "winhelo.c"]
+    17                                          [SECTION .data]
+    18 00000000                                 LC0:
+    19 00000000 68 65 6C 6C 6F 00               	DB	"hello",0x00
+    20 00000006                                 LC1:
+    21 00000006 25 58 00                        	DB	"%X",0x00
+    22                                          [SECTION .text]
+    23 00000000                                 	GLOBAL	_HariMain
+    24 00000000                                 _HariMain:
+    25 00000000 55                              	PUSH	EBP
+    26 00000001 89 E5                           	MOV	EBP,ESP
+    27 00000003 57                              	PUSH	EDI
+    28 00000004 56                              	PUSH	ESI
+    29 00000005 53                              	PUSH	EBX
+    30 00000006 8D 5D B4                        	LEA	EBX,DWORD [-76+EBP]
+    31 00000009 83 EC 40                        	SUB	ESP,64
+    32 0000000C E8 [00000000]                   	CALL	_api_initmalloc
+    33 00000011 68 00001D4C                     	PUSH	7500
+    34 00000016 E8 [00000000]                   	CALL	_api_malloc
+    35 0000001B 68 [00000000]                   	PUSH	LC0
+    36 00000020 6A FF                           	PUSH	-1
+    37 00000022 89 C7                           	MOV	EDI,EAX
+    38 00000024 6A 32                           	PUSH	50
+    39 00000026 68 00000096                     	PUSH	150
+    40 0000002B 50                              	PUSH	EAX
+    41 0000002C E8 [00000000]                   	CALL	_api_openwin
+    42 00000031 6A 03                           	PUSH	3
+    43 00000033 6A 2B                           	PUSH	43
+    44 00000035 89 C6                           	MOV	ESI,EAX
+    45 00000037 68 0000008D                     	PUSH	141
+    46 0000003C 6A 24                           	PUSH	36
+    47 0000003E 6A 08                           	PUSH	8
+    48 00000040 50                              	PUSH	EAX
+    49 00000041 E8 [00000000]                   	CALL	_api_boxfilwin
+    50 00000046 83 C4 30                        	ADD	ESP,48
+    51 00000049 57                              	PUSH	EDI
+    52 0000004A 68 [00000006]                   	PUSH	LC1
+    53 0000004F 53                              	PUSH	EBX
+    54 00000050 E8 [00000000]                   	CALL	_sprintf
+    55 00000055 53                              	PUSH	EBX
+    56 00000056 6A 0C                           	PUSH	12
+    57 00000058 6A 00                           	PUSH	0
+    58 0000005A 6A 1C                           	PUSH	28
+    59 0000005C 6A 1C                           	PUSH	28
+    60 0000005E 56                              	PUSH	ESI
+    61 0000005F E8 [00000000]                   	CALL	_api_putstrwin
+    62 00000064 83 C4 24                        	ADD	ESP,36
+    63 00000067                                 L2:
+    64 00000067 6A 01                           	PUSH	1
+    65 00000069 E8 [00000000]                   	CALL	_api_getkey
+    66 0000006E 5A                              	POP	EDX
+    67 0000006F 83 F8 0A                        	CMP	EAX,10
+    68 00000072 75 F3                           	JNE	L2
+    69 00000074 68 00001D4C                     	PUSH	7500
+    70 00000079 57                              	PUSH	EDI
+    71 0000007A E8 [00000000]                   	CALL	_api_free
+    72 0000007F 56                              	PUSH	ESI
+    73 00000080 E8 [00000000]                   	CALL	_api_closewin
+    74 00000085 E8 [00000000]                   	CALL	_api_end
+    75 0000008A 8D 65 F4                        	LEA	ESP,DWORD [-12+EBP]
+    76 0000008D 5B                              	POP	EBX
+    77 0000008E 5E                              	POP	ESI
+    78 0000008F 5F                              	POP	EDI
+    79 00000090 5D                              	POP	EBP
+    80 00000091 C3                              	RET
